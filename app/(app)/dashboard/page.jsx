@@ -1,0 +1,35 @@
+import { columns } from "./columns"
+import { DataTable } from "./data-table"
+import { nanoid } from "nanoid"
+
+
+
+async function getData() {
+  const response = await fetch("http://localhost:3000/api/users");
+  const data = await response.json();
+  const users = data.users
+  console.log(data)
+  return new Array(50).fill(null).map(() => ({
+      id: nanoid(),
+      email: "slavachekhunov@gmail.com",
+      name: "slava",
+      randomKey: "1234567890abcdef",
+      role: "ADMIN",
+  }))
+  // return users.map((user) => ({
+  // id: user.id,
+  // email: user.email,
+  // role: user.role,
+  // name: user.name,
+  // }))
+}
+
+export default async function DemoPage() {
+  const data = await getData()
+
+  return (
+    <div className="container mx-auto py-10">
+      <DataTable columns={columns} data={data} />
+    </div>
+  )
+}
