@@ -5,10 +5,12 @@ import { Alert } from "../../../components/ui/alert"
 import { Button } from "../../../components/ui/button"
 import { Input } from "../../../components/ui/input"
 import { Label } from "../../../components/ui/label"
+import { signIn } from 'next-auth/react'
 import { useState } from "react"
 
 export const Form = () => {
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [active, setActive] = useState(false);
@@ -20,9 +22,32 @@ export const Form = () => {
     specialCharCheck: false,
   })
 
-  const onSubmit = async (e) => {
+  const onSubmit = async e => {
     e.preventDefault()
+
+    try {
+      const res = await fetch('/api/update', {
+        method: 'POST',
+        body: JSON.stringify({
+          email,
+          password
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      if (res.ok) {
+        signIn()
+      } else {
+        console.log(error)
+        setError((await res.json()).error)
+      }
+    } catch (error) {
+      console.log(error)
+      setError(error?.message)
+    }
   }
+
 
   const handlePassword = (e) => {
     setPassword(e.target.value)
@@ -63,13 +88,20 @@ export const Form = () => {
       }
   }
 
- 
-
-
-
 
   return (
     <form onSubmit={onSubmit} className="space-y-12 w-full sm:w-[400px]">
+      <div className="grid w-full items-center gap-1.5">
+        <Label htmlFor="email">Email</Label>
+        <Input
+          className="w-full"
+          required
+          value={email}
+          onChange={(e) => {setEmail(e.target.value)}}
+          id="email"
+          type="email"
+        />
+      </div>
       <div className="grid w-full items-center gap-1.5">
         <Label htmlFor="password">New Password</Label>
         <Input

@@ -1,6 +1,8 @@
 "use client"
 import { useState } from "react";
 
+import { Trash2 } from "lucide-react"
+
 import {
   flexRender,
   VisibilityState,
@@ -31,6 +33,7 @@ import {
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu"
 import { Alert } from "../../../components/ui/alert";
+import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 
 export function DataTable({ columns, data }) {
   const [sorting, setSorting] = useState([])
@@ -89,7 +92,8 @@ export function DataTable({ columns, data }) {
 
   return (
     <div>
-      <div className="flex items-center py-4">
+      <div className="flex w-full py-4">
+        <div className="flex w-2/3 space-x-4">
         <Input
           placeholder="Filter emails..."
           value={(table.getColumn("email")?.getFilterValue()) ?? ""}
@@ -98,6 +102,21 @@ export function DataTable({ columns, data }) {
           }
           className="max-w-sm"
         />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="hover:bg-gray-100" >
+              Bulk Options
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 h-4 w-4"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="bg-gray-50">
+          <DropdownMenuItem className=" flex flex-row hover:bg-gray-200"> 
+          <Trash2 className="pr-2"/>
+          Move to trash
+          </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto hover:bg-gray-100" >

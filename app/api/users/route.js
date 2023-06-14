@@ -5,8 +5,6 @@ import { prisma } from "../../../lib/prisma";
 export async function GET() {
     try {
         const users = await prisma.user.findMany();
-        console.log(users)
-    
         return  new NextResponse(JSON.stringify({
           users
       }), { status: 200 })

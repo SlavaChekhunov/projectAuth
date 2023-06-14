@@ -11,6 +11,27 @@ export async function POST(req) {
     try {
       const { email, password } = await req.json()
       const hashed = await hash(password, 12)
+
+      //email server-side validation
+      const emailRegex = /@publicisna\.com$/;
+
+      if (!emailRegex.test(email)) {
+      throw new Error('Email address must be from "@publicisna.com" domain.');
+      }
+
+      //password server-side validation
+      if (password.length < 8) {
+        throw new Error("Password must be at least 8 characters long");
+      }
+      if (!/\d/.test(password)) {
+        throw new Error("Password must contain at least one number");
+      }
+      if (!/[A-Z]/.test(password)) {
+        throw new Error("Password must contain at least one uppercase letter");
+      }
+      if (!/[^a-zA-Z0-9]/.test(password)) {
+        throw new Error("Password must contain at least one special character");
+      }
   
       const user = await prisma.user.create({
         data: {

@@ -4,23 +4,29 @@
 
 import { NextResponse } from "next/server";
 import { prisma } from "../../../lib/prisma";
+import { hash } from "bcrypt";
 
 
 export async function POST(req) {
     try {
-      const { email, name } = await req.json()
-      const user = await prisma.user.create({
+      const { email, password } = await req.json()
+      const hashed = await hash(password, 12)
+
+      //for the reset we do need the email field because, if the user forgot their password they wouldnt be logged in
+      //therefore we cannot just simply get the session data from the server.
+
+      const updateUsers = await prisma.user.update({
+        where: {
+          email: email
+        },
         data: {
-          email,
-          name
-        }
+          password: hashed
+        },
       })
   
+      console.log(updateUsers)
       return  new NextResponse(JSON.stringify({
-        user: {
-            email: user.email,
-            name: user.name
-        }
+        updateUsers
     }), { status: 200 })
           
     } catch (err) {

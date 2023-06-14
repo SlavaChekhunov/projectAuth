@@ -5,10 +5,9 @@ import { nanoid } from "nanoid"
 
 
 async function getData() {
-  const response = await fetch("http://localhost:3000/api/users");
-  const data = await response.json();
-  const users = data.users
-  console.log(data)
+  'use server';
+    const users = await prisma.user.findMany();
+
   return new Array(50).fill(null).map(() => ({
       id: nanoid(),
       email: "slavachekhunov@gmail.com",

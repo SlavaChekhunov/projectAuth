@@ -12,7 +12,6 @@ export const RegisterForm = () => {
   const [password, setPassword] = useState("")
   const [error, setError] = useState(null)
   const [message, setMessage] = useState(null)
-  const [active, setActive] = useState(false);
   const [pwdRequired, setPwdRequired] = useState(false);
   const [checks, setChecks] = useState({
     capsLetterCheck: false,
@@ -20,23 +19,9 @@ export const RegisterForm = () => {
     pwdLengthCheck: false,
     specialCharCheck: false,
   })
-  const [allChecksPassed, setAllChecksPassed] = useState(false);
-  const [buttonDisabled, setButtonDisabled] = useState(true);
-
-
 
   const handleValidate = (e) => {
     setEmail(e.target.value)
-    const regEx = /^[\w-.]+@publicisna.com$/;
-    if (!regEx.test(e.target.value)) {
-      setActive(true);
-      setButtonDisabled(true);
-      setMessage("Please enter a valid @publicisna email address");
-    } else {
-      setActive(false);
-      setButtonDisabled(!allChecksPassed);
-      setMessage("");
-    }
   }
 
   const handlePassword = (e) => {
@@ -65,8 +50,6 @@ export const RegisterForm = () => {
       pwdLengthCheck,
       specialCharCheck
     });
-    setAllChecksPassed(capsLetterCheck && numberCheck && pwdLengthCheck && specialCharCheck);
-    setButtonDisabled(active || !(capsLetterCheck && numberCheck && pwdLengthCheck && specialCharCheck));
   }
 
   const onSubmit = async e => {
@@ -130,7 +113,7 @@ export const RegisterForm = () => {
       {error && <Alert>{error}</Alert>}
       {message && <Alert className="bg-red-200">{message}</Alert>}
       <div className="w-full">
-        <Button disabled = {buttonDisabled} className="w-full p-3 bg-indigo-600 text-white hover:bg-indigo-500 hover:shadow-md focus-visible:outline-none disabled:bg-indigo-500/80 focus-visible:ring-2 focus-visible:ring-ring focus:scale-[0.98]" size="lg">
+        <Button className="w-full p-3 bg-indigo-600 text-white hover:bg-indigo-500 hover:shadow-md focus-visible:outline-none disabled:bg-indigo-500/80 focus-visible:ring-2 focus-visible:ring-ring focus:scale-[0.98]" size="lg">
           Register
         </Button>
       </div>
