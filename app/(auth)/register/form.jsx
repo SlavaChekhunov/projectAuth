@@ -110,7 +110,7 @@ export const RegisterForm = () => {
         pwdLengthCheck={checks.pwdLengthCheck ? "valid" : "invalid"}
         specialCharCheck={checks.specialCharCheck ? "valid" : "invalid"}
       /> : null}
-      {error && <Alert>{error}</Alert>}
+      {error && <Alert className="bg-red-200">{error}</Alert>}
       {message && <Alert className="bg-red-200">{message}</Alert>}
       <div className="w-full">
         <Button className="w-full p-3 bg-indigo-600 text-white hover:bg-indigo-500 hover:shadow-md focus-visible:outline-none disabled:bg-indigo-500/80 focus-visible:ring-2 focus-visible:ring-ring focus:scale-[0.98]" size="lg">
