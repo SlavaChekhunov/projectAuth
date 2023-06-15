@@ -3,6 +3,7 @@ const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.API_KEY)
 
 export async function POST(req) {
+  
     const msg = {
       to: 'slavachekhunov@gmail.com', // Change to your recipient
       from: 'slava.chekhunov@publicisna.com', // Change to your verified sender

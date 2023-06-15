@@ -43,7 +43,7 @@ export const RegisterForm = () => {
     const capsLetterCheck = /[A-Z]/.test(value);
     const numberCheck = /[0-9]/.test(value);
     const pwdLengthCheck = value.length >= 8;
-    const specialCharCheck = /[!@#$%^&*]/.test(value);
+    const specialCharCheck = /[!@#$%^&*~]/.test(value);
     setChecks({
       capsLetterCheck,
       numberCheck,

@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Trash2 } from "lucide-react"
 
@@ -34,11 +34,12 @@ import {
 } from "../../../components/ui/dropdown-menu"
 import { Alert } from "../../../components/ui/alert";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
+import Loading from "../../loading";
 
 export function DataTable({ columns, data }) {
   const [sorting, setSorting] = useState([])
   const [columnFilters, setColumnFilters] = useState([])
-  const [columnVisibility, setColumnVisibility] = useState({})
+  // const [columnVisibility, setColumnVisibility] = useState({})
   const [rowSelection, setRowSelection] = useState({})
   const [showStatusBar, setShowStatusBar] = useState(true)
   const [showActivityBar, setShowActivityBar] = useState(false)
@@ -46,31 +47,28 @@ export function DataTable({ columns, data }) {
   const [email, setEmail] = useState("")
   const [name, setName] = useState("")
   const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(true);
 
-  const onSubmit = async e => {
-    e.preventDefault()
-    try {
-      const res = await fetch('/api/add', {
-        method: 'POST',
-        body: JSON.stringify({
-          email,
-          name
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      if (res.ok) {
-        console.log("res ok")
-      } else {
-        setError((await res.json()).error)
-      }
-    } catch (error) {
-      setError(error?.message)
+
+  //local storage preferences
+  // Initialize column visibility state from localStorage
+  const [columnVisibility, setColumnVisibility] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return JSON.parse(localStorage.getItem('columnVisibility')) || {};
     }
-  }
+    return {};
+  });
 
-
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setColumnVisibility(JSON.parse(localStorage.getItem('columnVisibility')) || {});
+      setLoading(false);
+    }
+  }, []);
+  
+  
+  
+  
   const table = useReactTable({
     data,
     columns,
@@ -89,7 +87,11 @@ export function DataTable({ columns, data }) {
       rowSelection,
     },
   })
-
+  
+  if (loading) {
+    return <Loading />;
+  }
+  
   return (
     <div>
       <div className="flex w-full py-4">
@@ -109,11 +111,11 @@ export function DataTable({ columns, data }) {
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 h-4 w-4"><polyline points="6 9 12 15 18 9"></polyline></svg>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-gray-50">
-          <DropdownMenuItem className=" flex flex-row hover:bg-gray-200"> 
+          <DropdownMenuContent align="start" className="bg-gray-50">
+          <DropdownMenuCheckboxItem className=" flex flex-row hover:bg-gray-200"> 
           <Trash2 className="pr-2"/>
           Move to trash
-          </DropdownMenuItem>
+          </DropdownMenuCheckboxItem>
           </DropdownMenuContent>
         </DropdownMenu>
         </div>
@@ -133,12 +135,11 @@ export function DataTable({ columns, data }) {
               .map((column) => {
                 return (
                   <DropdownMenuCheckboxItem
-                  
                     key={column.id}
                     className="capitalize hover:bg-gray-200"
                     checked={column.getIsVisible()}
                     onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
+                    column.toggleVisibility(!!value)
                     }
                   >
                     {column.id}
@@ -150,14 +151,6 @@ export function DataTable({ columns, data }) {
       </div>
     <div className="rounded-md border">
       <Table>
-        {/* <div>
-          <form onSubmit={onSubmit} className="flex justify-center flex-row">
-            {error && <Alert>{error}</Alert>}
-            <Input type="text" placeholder="Enter Name" onChange={e => setName(e.target.value)}/>
-            <Input type="text" placeholder="Enter Email" onChange={e => setEmail(e.target.value)}/>
-            <Button>Add</Button>
-          </form>
-        </div> */}
         <TableHeader>
           {table.getHeaderGroups().map(headerGroup => (
             <TableRow key={headerGroup.id} className="ml-auto hover:bg-gray-100">

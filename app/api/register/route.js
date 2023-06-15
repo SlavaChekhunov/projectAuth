@@ -29,7 +29,7 @@ export async function POST(req) {
       if (!/[A-Z]/.test(password)) {
         throw new Error("Password must contain at least one uppercase letter");
       }
-      if (!/[^a-zA-Z0-9]/.test(password)) {
+      if (!/[!@#$%^&*~]/.test(password)) {
         throw new Error("Password must contain at least one special character");
       }
   
