@@ -13,7 +13,6 @@ import {
 
 import { Button } from "../../../components/ui/button"
 import { Checkbox } from "../../../components/ui/checkbox"
-import { EditForm } from "./editForm"
 
 
 export const columns = [
@@ -90,9 +89,7 @@ export const columns = [
             >
               
               Add User</DropdownMenuItem>
-            <DropdownMenuItem className="capitalize hover:bg-gray-200"
-             onClick={() => <EditForm />}
-            >Edit</DropdownMenuItem>
+            <DropdownMenuItem className="capitalize hover:bg-gray-200">Edit</DropdownMenuItem>
             <DropdownMenuItem className="capitalize hover:bg-gray-200">Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
