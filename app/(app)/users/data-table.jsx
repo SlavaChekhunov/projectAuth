@@ -5,7 +5,6 @@ import { Trash2 } from "lucide-react"
 
 import {
   flexRender,
-  VisibilityState,
   getFilteredRowModel,
   getCoreRowModel,
   getSortedRowModel,
@@ -37,6 +36,8 @@ import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import Loading from "../../loading";
 
 export function DataTable({ columns, data }) {
+
+
   const [sorting, setSorting] = useState([])
   const [columnFilters, setColumnFilters] = useState([])
   const [rowSelection, setRowSelection] = useState({})
@@ -47,61 +48,8 @@ export function DataTable({ columns, data }) {
   const [name, setName] = useState("")
   const [error, setError] = useState(null)
 
-
-  //edit state
-  const [editedRows, setEditedRows] = useState({});
-
-  //edit cell change function
-  const handleCellChange = (rowId, columnId, value) => {
-    setEditedRows((prevEditedRows) => ({
-      ...prevEditedRows,
-      [rowId]: {
-        ...prevEditedRows[rowId],
-        [columnId]: value,
-      },
-    }));
-  };
-
-  //function to toggle the edit button in actions
-  const toggleRowEditing = (rowId) => {
-    setEditedRows((prevEditedRows) => ({
-      ...prevEditedRows,
-      [rowId]: !prevEditedRows[rowId],
-    }));
-  };
-
-
-
   //loading state
   const [loading, setLoading] = useState(true);
-
-  //updateMany
-  const onSubmit = async e => {
-    e.preventDefault()
-
-    try {
-      const res = await fetch('/api/updateMany', {
-        method: 'POST',
-        body: JSON.stringify({
-          name,
-          email,
-          role
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      if (res.ok) {
-        signIn()
-      } else {
-        console.log(error)
-        setError((await res.json()).error)
-      }
-    } catch (error) {
-      console.log(error)
-      setError(error?.message)
-    }
-  }
 
 
   //local storage preferences
@@ -143,7 +91,6 @@ export function DataTable({ columns, data }) {
   
   
   //function to reset the local storage preferences
-
   const handleReset = () => {
     localStorage.removeItem('columnVisibility');
     //update column visibility state to default all columns visible view
@@ -152,7 +99,7 @@ export function DataTable({ columns, data }) {
   
   const table = useReactTable({
     data,
-    columns,
+    columns: tableColumns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
@@ -260,16 +207,8 @@ export function DataTable({ columns, data }) {
               >
                 {row.getVisibleCells().map(cell => (
                   <TableCell key={cell.id}>
-                    {editedRows[row.id] ? (
-                      <Input
-                        type="text"
-                        value={cell.value}
-                        onChange={(e) => handleCellChange(row.id, cell.column.id, e.target.value)}
-                      />
-                    ) : (
-                      flexRender(cell.column.columnDef.cell, cell.getContext())
-                    )}
-                </TableCell>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
                 ))}
               </TableRow>
             ))
@@ -288,13 +227,6 @@ export function DataTable({ columns, data }) {
     {table.getFilteredSelectedRowModel().rows.length} of{" "}
     {table.getFilteredRowModel().rows.length} row(s) selected.
     </div>
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={onSubmit}
-        >
-          Submit Changes
-        </Button>
         <Button
           variant="outline"
           size="lg"
