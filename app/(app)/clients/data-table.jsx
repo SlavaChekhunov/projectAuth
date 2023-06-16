@@ -1,11 +1,10 @@
 "use client"
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { Trash2 } from "lucide-react"
 
 import {
   flexRender,
-  VisibilityState,
   getFilteredRowModel,
   getCoreRowModel,
   getSortedRowModel,
@@ -34,12 +33,11 @@ import {
 } from "../../../components/ui/dropdown-menu"
 import { Alert } from "../../../components/ui/alert";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
-import Loading from "../../loading";
 
 export function DataTable({ columns, data }) {
   const [sorting, setSorting] = useState([])
   const [columnFilters, setColumnFilters] = useState([])
-  // const [columnVisibility, setColumnVisibility] = useState({})
+  const [columnVisibility, setColumnVisibility] = useState({})
   const [rowSelection, setRowSelection] = useState({})
   const [showStatusBar, setShowStatusBar] = useState(true)
   const [showActivityBar, setShowActivityBar] = useState(false)
@@ -49,25 +47,6 @@ export function DataTable({ columns, data }) {
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true);
 
-
-  //local storage preferences
-  // Initialize column visibility state from localStorage
-  const [columnVisibility, setColumnVisibility] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return JSON.parse(localStorage.getItem('columnVisibility')) || {};
-    }
-    return {};
-  });
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setColumnVisibility(JSON.parse(localStorage.getItem('columnVisibility')) || {});
-      setLoading(false);
-    }
-  }, []);
-  
-  
-  
   
   const table = useReactTable({
     data,
@@ -88,10 +67,7 @@ export function DataTable({ columns, data }) {
     },
   })
   
-  if (loading) {
-    return <Loading />;
-  }
-  
+
   return (
     <div>
       <div className="flex w-full py-4">

@@ -1,19 +1,19 @@
 import { NextResponse } from "next/server";
+import { UUID, randomUUID } from "crypto";
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.API_KEY)
 
 export async function POST(req) {
+    const token = `${randomUUID()}${randomUUID()}`
+    const expirationTime = Date.now() + 3600000;
   
     const msg = {
-      to: 'slavachekhunov@gmail.com', // Change to your recipient
-      from: 'slava.chekhunov@publicisna.com', // Change to your verified sender
-      subject: 'Sending with SendGrid is Fun',
-      text: 'Hello, please activate your account by clicking this link: http://localhost:3000/change',
-      //right now we are hard coding localhost to see if it works, but later on we want it to read whatever environment it is sent from.
-      //On vercel you can use environment variables to know if youre on a preview branch or production. In prod you can set it to whatever the URL is.
-      //Would it be useful to have a token specific to the user at the end of the url as a parameter? It would dynamically read that route and direct them there?
-      html: '<strong>Hello, please activate your account by clicking this link: http://localhost:3000/change</strong>',
-    }
+      to: 'slavachekhunov@gmail.com',
+      from: 'slava.chekhunov@publicisna.com',
+      subject: 'Reset Password',
+      text: `Hello, please reset your password by clicking this link: http://localhost:3000/change?token=${token}`,
+      html: `<strong>Hello, please reset your password by clicking this link: <a href="http://localhost:3000/change?token=${token}">Reset Password</a></strong>`,
+    };
     try{
         const emailRes = await sgMail.send(msg)
         console.log(emailRes)
@@ -27,3 +27,27 @@ export async function POST(req) {
     }), { status: 200 })
           
   }
+
+  // Example route handler for handling the password reset link
+export async function GET(req) {
+  const { token } = req.query; // Extract the token from the query parameters
+  const isTokenValid = await verifyToken(token); // Verify if the token is valid and not expired
+
+  if (isTokenValid) {
+    // Token is valid, allow the user to reset their password
+    return new NextResponse("Reset password page");
+  } else {
+    // Token is invalid or expired
+    return new NextResponse("Invalid or expired token");
+  }
+}
+
+async function verifyToken(token) {
+  // Perform token verification logic
+  // Compare the expiration time with the current time
+  const currentTimestamp = Date.now();
+  const expirationTime = await getTokenExpirationTime(token); // Retrieve the expiration time associated with the token from your data storage
+
+  return expirationTime > currentTimestamp;
+}
+  
