@@ -13,6 +13,7 @@ import {
 
 import { Button } from "../../../components/ui/button"
 import { Checkbox } from "../../../components/ui/checkbox"
+import { useRouter } from "next/navigation"
 
 
 export const columns = [
@@ -35,10 +36,18 @@ export const columns = [
     enableSorting: false,
     enableHiding: false,
   },
-    {
-      accessorKey: "name",
-      header: "Name"
+  {
+    accessorKey: "name",
+    header: "Name",
+    cell: ({ row }) => {
+      const router = useRouter();
+      return (
+        <Button onClick={() => router.push('/edit')}>
+          username
+        </Button>
+      );
     },
+  },
     {
       accessorKey: "email",
       header: ({ column }) => {
@@ -66,7 +75,7 @@ export const columns = [
     id: "actions",
     cell: ({ row }) => {
       const payment = row.original
- 
+      const router = useRouter();
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -85,12 +94,12 @@ export const columns = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="capitalize hover:bg-gray-200"
-            
+            onClick={() => router.push('/add')}
             >
-              
-              Add User</DropdownMenuItem>
-            <DropdownMenuItem className="capitalize hover:bg-gray-200">Edit</DropdownMenuItem>
-            <DropdownMenuItem className="capitalize hover:bg-gray-200">Delete</DropdownMenuItem>
+            Add User</DropdownMenuItem>
+            <DropdownMenuItem className="capitalize hover:bg-gray-200"
+              onClick={() => router.push('/delete')}
+            >Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

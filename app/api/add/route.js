@@ -2,15 +2,15 @@
 //STEP 2: save it to the database
 //STEP 3: send some message to the user letting them know that they were successfully registered
 
+import { hash } from "bcrypt";
 import { NextResponse } from "next/server";
 import { prisma } from "../../../lib/prisma";
-import { hash } from "bcrypt";
+
 
 export async function POST(req) {
     try {
-      const { email, name, role, password } = await req.json()
-
-      const hashed = await hash(password, 12);
+      const { email, password, role, name } = await req.json()
+      const hashed = await hash(password, 12)
 
       //email server-side validation
       const emailRegex = /@publicisna\.com$/;
@@ -32,24 +32,20 @@ export async function POST(req) {
       if (!/[!@#$%^&*~]/.test(password)) {
         throw new Error("Password must contain at least one special character");
       }
-
-      const updateUsers = await prisma.user.updateMany({
-        where: {
-          email: {
-            contains: email,
-          },
-        },
+  
+      const user = await prisma.user.create({
         data: {
-          name: name,
+          email,
           password: hashed,
-          email: email,
-          role: role
-        },
+          role, 
+          name
+        }
       })
   
-      console.log(updateUsers)
       return  new NextResponse(JSON.stringify({
-        updateUsers
+        user: {
+            email: user.email
+        }
     }), { status: 200 })
           
     } catch (err) {

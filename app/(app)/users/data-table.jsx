@@ -51,7 +51,6 @@ export function DataTable({ columns, data }) {
   //loading state
   const [loading, setLoading] = useState(true);
 
-
   //local storage preferences
   // Initialize column visibility state from localStorage
   const [columnVisibility, setColumnVisibility] = useState(() => {
