@@ -19,9 +19,9 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from "../../../components/ui/table"
-import { Button } from "../../../components/ui/button"
-import { Input } from "../../../components/ui/input"
+} from "../../../components/ui/table.jsx"
+import { Button } from "../../../components/ui/button.jsx"
+import { Input } from "../../../components/ui/input.jsx"
 
 import {
   DropdownMenu,

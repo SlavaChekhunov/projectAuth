@@ -11,9 +11,22 @@ import {
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu"
 
-import { Button } from "../../../components/ui/button"
-import { Checkbox } from "../../../components/ui/checkbox"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../../../components/ui/dialog"
+
+
+import { Button } from "../../../components/ui/button.jsx"
+import { Checkbox } from "../../../components/ui/checkbox.jsx"
 import { useRouter } from "next/navigation"
+import { Input } from "../../../components/ui/input"
+import { useState } from "react";
 
 
 export const columns = [
@@ -42,7 +55,7 @@ export const columns = [
     cell: ({ row }) => {
       const router = useRouter();
       return (
-        <Button onClick={() => router.push('/edit')}>
+        <Button variant="ghost" onClick={() => router.push('/edit')}>
           username
         </Button>
       );
@@ -74,9 +87,37 @@ export const columns = [
   {
     id: "actions",
     cell: ({ row }) => {
+      const [deleteInputValue, setDeleteInputValue] = useState("");
+      const [open, setOpen] = useState(false);
+
+      const handleDelete = async (rowData) => {
+        if (deleteInputValue.toLowerCase() === "delete") {
+          try {
+            const res = await fetch('/api/delete', {
+              method: 'POST',
+              body: JSON.stringify({
+                email: rowData.email,
+              }),
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            })
+            if (res.ok) {
+              console.log(res)
+            } else {
+              // handle error
+            }
+          } catch (error) {
+            console.log(error)
+          }
+        }
+      }
+      
+
       const payment = row.original
       const router = useRouter();
       return (
+        <Dialog open={open} onOpenChange={setOpen}>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="ml-auto hover:bg-gray-200">
@@ -94,14 +135,39 @@ export const columns = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="capitalize hover:bg-gray-200"
-            onClick={() => router.push('/add')}
+            onClick={() => router.push('/edit')}
             >
-            Add User</DropdownMenuItem>
+            Edit</DropdownMenuItem>
+            <DialogTrigger asChild>
             <DropdownMenuItem className="capitalize hover:bg-gray-200"
-              onClick={() => router.push('/delete')}
             >Delete</DropdownMenuItem>
+            </DialogTrigger>
           </DropdownMenuContent>
         </DropdownMenu>
+        <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Are you absolutely sure?</DialogTitle>
+      <DialogDescription>
+        This action cannot be undone. Are you sure you want to permanently
+        delete this user from the table? Type the word "DELETE" to proceed.
+      </DialogDescription>
+    </DialogHeader>
+    <DialogFooter>
+      <Input
+      value={deleteInputValue}
+      onChange={(e) => {
+        setDeleteInputValue(e.target.value);
+      }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' && deleteInputValue.toLowerCase() === 'delete') {
+          handleDelete(row.original);
+          setOpen(false);
+        }
+      }}
+    />
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
       )
     },
   },

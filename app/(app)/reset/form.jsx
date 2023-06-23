@@ -1,10 +1,10 @@
 "use client"
 
 import { useRouter } from 'next/navigation'
-import { Alert } from "../../../components/ui/alert"
-import { Button } from "../../../components/ui/button"
-import { Input } from "../../../components/ui/input"
-import { Label } from "../../../components/ui/label"
+import { Alert } from "../../../components/ui/alert.jsx"
+import { Button } from "../../../components/ui/button.jsx"
+import { Input } from "../../../components/ui/input.jsx"
+import { Label } from "../../../components/ui/label.jsx"
 import { useState } from "react"
 
 export const RegisterForm = () => {

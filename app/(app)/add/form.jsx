@@ -1,11 +1,12 @@
 "use client"
-import { Alert } from "../../../components/ui/alert"
-import { Button } from "../../../components/ui/button"
-import { Input } from "../../../components/ui/input"
-import { Label } from "../../../components/ui/label"
+import { Alert } from "../../../components/ui/alert.jsx"
+import { Button } from "../../../components/ui/button.jsx"
+import { Input } from "../../../components/ui/input.jsx"
+import { Label } from "../../../components/ui/label.jsx"
 import  Password  from "../../../components/Password"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Email from "../../../components/Email"
 
 export const AddForm = () => {
   const router = useRouter();
@@ -16,11 +17,13 @@ export const AddForm = () => {
   const [error, setError] = useState(null)
   const [message, setMessage] = useState(null)
   const [pwdRequired, setPwdRequired] = useState(false);
+  const [EmailRequired, setEmailRequired] = useState(false);
   const [checks, setChecks] = useState({
     capsLetterCheck: false,
     numberCheck: false,
     pwdLengthCheck: false,
     specialCharCheck: false,
+    emailCheck: false
   })
 
   const handleValidate = (e) => {
@@ -38,8 +41,13 @@ export const AddForm = () => {
     setPwdRequired(true);
   }
 
+  const handleOnFocusEmail = (e) => {
+    setEmailRequired(true);
+  }
+
   const handleOnBlur = (e) => {
     setPwdRequired(false);
+    setEmailRequired(false);
     setMessage("");
   }
 
@@ -58,13 +66,13 @@ export const AddForm = () => {
     });
   }
 
-//   const handleOnKeyDown = (e) => {
-//     const value = e.target.value;
-//     const emailCheck = /@publicisna\.com$/.test(value);
-//     setChecks({
-//       emailCheck
-//     });
-//   }
+  const handleOnKeyDown = (e) => {
+    const value = e.target.value;
+    const emailCheck = /@publicisna\.com$/.test(value);
+    setChecks({
+      emailCheck
+    });
+  }
 
   const onSubmit = async e => {
     e.preventDefault()
@@ -115,13 +123,16 @@ export const AddForm = () => {
           value={email}
           onChange={handleValidate}
           onBlur={handleOnBlur}
-        //   onKeyUp={handleOnKeyDown}
+          onFocus={handleOnFocusEmail}
+          onKeyUp={handleOnKeyDown}
           id="email"
           type="email"
         />
-        {/* <p className="text-lg">@publicisna.com</p> */}
         </div>
       </div>
+        {EmailRequired? <Email
+          emailCheck={checks.emailCheck ? "valid" : "invalid"}
+        /> : null}
       <div className="grid w-full items-center gap-1.5">
         <Label htmlFor="password">Password</Label>
         <Input
@@ -136,6 +147,12 @@ export const AddForm = () => {
           type="password"
         />
       </div>
+          {pwdRequired? <Password 
+            capsLetterFlag={checks.capsLetterCheck ? "valid" : "invalid"}
+            numberFlag={checks.numberCheck ? "valid" : "invalid"}
+            pwdLengthCheck={checks.pwdLengthCheck ? "valid" : "invalid"}
+            specialCharCheck={checks.specialCharCheck ? "valid" : "invalid"}
+          /> : null}
       <div className="grid w-full items-center gap-1.5">
         <Label htmlFor="role">Role</Label>
         <Input
@@ -148,12 +165,6 @@ export const AddForm = () => {
           type="role"
         />
       </div>
-      {pwdRequired? <Password 
-        capsLetterFlag={checks.capsLetterCheck ? "valid" : "invalid"}
-        numberFlag={checks.numberCheck ? "valid" : "invalid"}
-        pwdLengthCheck={checks.pwdLengthCheck ? "valid" : "invalid"}
-        specialCharCheck={checks.specialCharCheck ? "valid" : "invalid"}
-      /> : null}
       {error && <Alert className="bg-red-200">{error}</Alert>}
       {message && <Alert className="bg-red-200">{message}</Alert>}
       <div className="w-full">

@@ -11,8 +11,8 @@ import {
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu"
 
-import { Button } from "../../../components/ui/button"
-import { Checkbox } from "../../../components/ui/checkbox"
+import { Button } from "../../../components/ui/button.jsx"
+import { Checkbox } from "../../../components/ui/checkbox.jsx"
 
 
 export const columns = [

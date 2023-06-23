@@ -1,7 +1,8 @@
 "use client"
 import { useState, useEffect } from "react";
 
-import { Trash2 } from "lucide-react"
+import { Trash2, FilePlus2, Plus } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 import {
   flexRender,
@@ -19,9 +20,9 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from "../../../components/ui/table"
-import { Button } from "../../../components/ui/button"
-import { Input } from "../../../components/ui/input"
+} from "../../../components/ui/table.jsx"
+import { Button } from "../../../components/ui/button.jsx"
+import { Input } from "../../../components/ui/input.jsx"
 
 import {
   DropdownMenu,
@@ -31,13 +32,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu"
-import { Alert } from "../../../components/ui/alert";
+import { Alert } from "../../../components/ui/alert.jsx";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import Loading from "../../loading";
 
 export function DataTable({ columns, data }) {
 
-
+  const router = useRouter();
   const [sorting, setSorting] = useState([])
   const [columnFilters, setColumnFilters] = useState([])
   const [rowSelection, setRowSelection] = useState({})
@@ -146,6 +147,7 @@ export function DataTable({ columns, data }) {
           </DropdownMenuContent>
         </DropdownMenu>
         </div>
+        <div className="flex w-1/3 space-x-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto hover:bg-gray-100" >
@@ -173,8 +175,22 @@ export function DataTable({ columns, data }) {
                   </DropdownMenuCheckboxItem>
                 )
               })}
+              <DropdownMenuSeparator />
+              <DropdownMenuCheckboxItem className="capitalize hover:bg-gray-200"
+                onClick={handleReset}
+               >
+                Reset
+            </DropdownMenuCheckboxItem>
           </DropdownMenuContent>
         </DropdownMenu>
+        <Button
+          variant="outline"
+          onClick={() => router.push('/add')}
+        >
+          Add
+          <Plus className="pl-2"/>
+        </Button>
+        </div>
       </div>
     <div className="rounded-md border">
       <Table>
@@ -226,13 +242,6 @@ export function DataTable({ columns, data }) {
     {table.getFilteredSelectedRowModel().rows.length} of{" "}
     {table.getFilteredRowModel().rows.length} row(s) selected.
     </div>
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={handleReset}
-        >
-          Reset
-        </Button>
         <Button
           variant="outline"
           size="lg"
