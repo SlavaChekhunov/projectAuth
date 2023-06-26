@@ -8,14 +8,6 @@ import { nanoid } from "nanoid"
 
 async function getData() {
  'use server'
-  // const res = await fetch('http://localhost:3000/api/get')
-  // if (!res.ok) {
-  //   throw new Error('Failed to fetch data')
-  // }
- 
-  // const { users } = await res.json()
-  // console.log(users)
-
     const users = await prisma.user.findMany();
 
   // return new Array(50).fill(null).map(() => ({

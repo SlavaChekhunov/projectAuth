@@ -1,6 +1,19 @@
 "use client"
 
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, MoreHorizontal, FolderInput, Cloud,
+  CreditCard,
+  Github,
+  Keyboard,
+  LifeBuoy,
+  LogOut,
+  Mail,
+  MessageSquare,
+  Plus,
+  PlusCircle,
+  Settings,
+  User,
+  UserPlus,
+  Users, } from "lucide-react"
 
 import {
   DropdownMenu,
@@ -20,6 +33,23 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../../../components/ui/dialog"
+
+import {
+  ContextMenu,
+  ContextMenuCheckboxItem,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+  ContextMenuTrigger,
+} from "../../../components/ui/context"
+
 
 
 import { Button } from "../../../components/ui/button.jsx"
@@ -54,12 +84,79 @@ export const columns = [
     header: "Name",
     cell: ({ row }) => {
       const router = useRouter();
+
+      const handleUsernameClick = (event) => {
+        if (event.ctrlKey) {
+          event.preventDefault();
+          window.open(`/edit?rowId=${row.id}`, '_blank');
+        } else {
+          router.push('/edit');
+        }
+      };
+
       return (
-        <Button variant="ghost" onClick={() => router.push('/edit')}>
+        <>
+        {/* <Button variant="ghost" onClick={() => router.push('/edit')}>
           username
-        </Button>
+        </Button> */}
+        <ContextMenu>
+        <ContextMenuTrigger className="flex items-center justify-center rounded-md text-sm"
+        onClick={handleUsernameClick}>
+          username
+        </ContextMenuTrigger>
+        <ContextMenuContent className="w-64">
+          <ContextMenuItem inset
+          onClick={() => window.open(`/edit?rowId=${row.id}`, "_blank")}
+          >
+            Open link in a new tab
+            <ContextMenuShortcut>⌘+📁</ContextMenuShortcut>
+          </ContextMenuItem>
+          <ContextMenuItem inset>
+            Back
+            <ContextMenuShortcut>⌘[</ContextMenuShortcut>
+          </ContextMenuItem>
+          <ContextMenuItem inset disabled>
+            Forward
+            <ContextMenuShortcut>⌘]</ContextMenuShortcut>
+          </ContextMenuItem>
+          <ContextMenuItem inset>
+            Reload
+            <ContextMenuShortcut>⌘R</ContextMenuShortcut>
+          </ContextMenuItem>
+          <ContextMenuSub>
+            <ContextMenuSubTrigger inset>More Tools</ContextMenuSubTrigger>
+            <ContextMenuSubContent className="w-48">
+              <ContextMenuItem>
+                Save Page As...
+                <ContextMenuShortcut>⇧⌘S</ContextMenuShortcut>
+              </ContextMenuItem>
+              <ContextMenuItem>Create Shortcut...</ContextMenuItem>
+              <ContextMenuItem>Name Window...</ContextMenuItem>
+              <ContextMenuSeparator />
+              <ContextMenuItem>Developer Tools</ContextMenuItem>
+            </ContextMenuSubContent>
+          </ContextMenuSub>
+          <ContextMenuSeparator />
+          <ContextMenuCheckboxItem checked>
+            Show Bookmarks Bar
+            <ContextMenuShortcut>⌘⇧B</ContextMenuShortcut>
+          </ContextMenuCheckboxItem>
+          <ContextMenuCheckboxItem>Show Full URLs</ContextMenuCheckboxItem>
+          <ContextMenuSeparator />
+          <ContextMenuRadioGroup value="pedro">
+            <ContextMenuLabel inset>People</ContextMenuLabel>
+            <ContextMenuSeparator />
+            <ContextMenuRadioItem value="pedro">
+              Pedro Duarte
+            </ContextMenuRadioItem>
+            <ContextMenuRadioItem value="colm">Colm Tuite</ContextMenuRadioItem>
+          </ContextMenuRadioGroup>
+        </ContextMenuContent>
+      </ContextMenu>
+      </>
       );
     },
+    
   },
     {
       accessorKey: "email",
@@ -134,10 +231,6 @@ export const columns = [
               Copy email
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="capitalize hover:bg-gray-200"
-            onClick={() => router.push('/edit')}
-            >
-            Edit</DropdownMenuItem>
             <DialogTrigger asChild>
             <DropdownMenuItem className="capitalize hover:bg-gray-200"
             >Delete</DropdownMenuItem>

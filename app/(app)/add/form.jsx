@@ -8,6 +8,25 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Email from "../../../components/Email"
 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../../../components/ui/card"
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../../../components/ui/select"
+
 export const AddForm = () => {
   const router = useRouter();
   const [email, setEmail] = useState("")
@@ -100,42 +119,47 @@ export const AddForm = () => {
   }
 
   return (
-   
-    <form onSubmit={onSubmit} className="space-y-12 w-full sm:w-[400px]">
-      <div className="grid w-full items-center gap-1.5">
-        <Label htmlFor="name">Name</Label>
-        <Input
-          className="w-full"
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          onBlur={handleOnBlur}
-          id="name"
-          type="name"
-        />
-      </div>
-      <div className="grid w-full items-center gap-1.5">
-        <Label htmlFor="email">Email</Label>
-        <div className="flex items-center">
-        <Input
-          className="w-full"
-          required
-          value={email}
-          onChange={handleValidate}
-          onBlur={handleOnBlur}
-          onFocus={handleOnFocusEmail}
-          onKeyUp={handleOnKeyDown}
-          id="email"
-          type="email"
-        />
-        </div>
-      </div>
-        {EmailRequired? <Email
-          emailCheck={checks.emailCheck ? "valid" : "invalid"}
+
+    <Card className="w-[400px]">
+    <CardHeader>
+      <CardTitle>Add Row</CardTitle>
+      <CardDescription>Please enter the values down below.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <form onSubmit={onSubmit}>
+        <div className="grid w-full items-center gap-4">
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="name">Name</Label>
+            <Input
+            className="w-full"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            onBlur={handleOnBlur}
+            id="name"
+            type="name"
+            placeholder="Username" />
+          </div>
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="name">Email</Label>
+            <Input
+            className="w-full"
+            required
+            value={email}
+            onChange={handleValidate}
+            onBlur={handleOnBlur}
+            onFocus={handleOnFocusEmail}
+            onKeyUp={handleOnKeyDown}
+            placeholder="Email"
+            id="email"
+            type="email" />
+          </div>
+         {EmailRequired? <Email
+         emailCheck={checks.emailCheck ? "valid" : "invalid"}
         /> : null}
-      <div className="grid w-full items-center gap-1.5">
-        <Label htmlFor="password">Password</Label>
-        <Input
+          <div className="grid w-full items-center gap-1.5">
+          <Label htmlFor="password">Password</Label>
+          <Input
           className="w-full"
           required
           value={password}
@@ -145,34 +169,38 @@ export const AddForm = () => {
           onKeyUp={handleOnKeyUp}
           id="password"
           type="password"
-        />
-      </div>
+          placeholder="Password"
+          />
+          </div>
           {pwdRequired? <Password 
             capsLetterFlag={checks.capsLetterCheck ? "valid" : "invalid"}
             numberFlag={checks.numberCheck ? "valid" : "invalid"}
             pwdLengthCheck={checks.pwdLengthCheck ? "valid" : "invalid"}
             specialCharCheck={checks.specialCharCheck ? "valid" : "invalid"}
           /> : null}
-      <div className="grid w-full items-center gap-1.5">
-        <Label htmlFor="role">Role</Label>
-        <Input
-          className="w-full"
-          required
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-        //   onBlur={handleOnBlur}
-          id="role"
-          type="role"
-        />
-      </div>
-      {error && <Alert className="bg-red-200">{error}</Alert>}
-      {message && <Alert className="bg-red-200">{message}</Alert>}
-      <div className="w-full">
-        <Button className="w-full p-3 bg-indigo-600 text-white hover:bg-indigo-500 hover:shadow-md focus-visible:outline-none disabled:bg-indigo-500/80 focus-visible:ring-2 focus-visible:ring-ring focus:scale-[0.98]" size="lg">
-          Add 
-        </Button>
-      </div>
-    </form>
-
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="role">Role</Label>
+            <Input
+            className="w-full"
+            required
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            onBlur={handleOnBlur}
+            id="role"
+            placeholder="Role"
+            type="role" />
+          </div>
+            {error && <Alert className="bg-red-200">{error}</Alert>}
+           {message && <Alert className="bg-red-200">{message}</Alert>}
+    <CardFooter className="flex justify-between px-0 pt-2">
+      <Button variant="outline"
+      onClick = {() => {router.push("/users")}}
+      >Cancel</Button>
+      <Button>Add</Button>
+    </CardFooter>
+        </div>
+      </form>
+    </CardContent>
+  </Card>
   )
 }

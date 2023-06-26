@@ -3,7 +3,7 @@
 //STEP 3: send some message to the user letting them know that they were successfully registered
 
 import { NextResponse } from "next/server";
-import { prisma } from "../../../lib/prisma";
+import { prisma } from "../../../../lib/prisma";
 import { hash } from "bcrypt";
 
 
