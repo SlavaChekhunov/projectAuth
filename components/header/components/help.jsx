@@ -1,6 +1,6 @@
 import { CreditCard, LogOut, PlusCircle, Settings, User, Pin, ExternalLink, HelpCircle, DivideCircleIcon } from "lucide-react"
 
-import { Button } from "../../../../components/ui/button"
+import { Button } from "../../ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,9 +10,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "../../../../components/ui/dropdown-menu"
+} from "../../ui/dropdown-menu"
 import Link from "next/link"
-import { Toggle } from "../../../../components/ui/toggle"
+import { Toggle } from "../../ui/toggle"
 
 export function HelpNav() {
   return (

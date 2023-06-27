@@ -96,9 +96,6 @@ export const columns = [
 
       return (
         <>
-        {/* <Button variant="ghost" onClick={() => router.push('/edit')}>
-          username
-        </Button> */}
         <ContextMenu>
         <ContextMenuTrigger className="flex items-center justify-center rounded-md text-sm"
         onClick={handleUsernameClick}>

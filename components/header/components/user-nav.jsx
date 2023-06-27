@@ -1,8 +1,7 @@
-'use client'
 
 import { CreditCard, LogOut, PlusCircle, Settings, User, Pin, ExternalLink, HelpCircle } from "lucide-react"
 
-import { Button } from "../../../../components/ui/button"
+import { Button } from "../../ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,13 +11,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "../../../../components/ui/dropdown-menu"
+} from "../../ui/dropdown-menu"
 
 import {
     Avatar,
     AvatarFallback,
     AvatarImage,
-  } from "../../../../components/ui/avatar"
+  } from "../../ui/avatar"
 import Link from "next/link"
 
 import { signOut } from 'next-auth/react'
@@ -88,7 +87,7 @@ export function UserNav() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()}>
+        <DropdownMenuItem>
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

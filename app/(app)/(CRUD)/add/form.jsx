@@ -1,12 +1,12 @@
 "use client"
-import { Alert } from "../../../components/ui/alert.jsx"
-import { Button } from "../../../components/ui/button.jsx"
-import { Input } from "../../../components/ui/input.jsx"
-import { Label } from "../../../components/ui/label.jsx"
-import  Password  from "../../../components/Password"
+import { Alert } from "../../../../components/ui/alert.jsx"
+import { Button } from "../../../../components/ui/button.jsx"
+import { Input } from "../../../../components/ui/input.jsx"
+import { Label } from "../../../../components/ui/label.jsx"
+import  Password  from "../../../../components/Validation/Password"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import Email from "../../../components/Email"
+import Email from "../../../../components/Validation/Email"
 
 import {
   Card,
@@ -15,7 +15,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../../components/ui/card"
+} from "../../../../components/ui/card"
 
 import {
   Select,
@@ -25,7 +25,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "../../../components/ui/select"
+} from "../../../../components/ui/select"
 
 export const AddForm = () => {
   const router = useRouter();

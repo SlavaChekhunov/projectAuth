@@ -3,6 +3,7 @@ import { prisma } from "../../../../lib/prisma";
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
 import { nanoid } from "nanoid"
+import  HeaderPage  from "../../../../components/header/page"
 
 
 
@@ -31,6 +32,7 @@ export default async function DemoPage() {
 
   return (
     <div className="container mx-auto">
+      <HeaderPage />
       <DataTable columns={columns} data={data} />
   </div>
   )

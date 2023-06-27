@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Picture1 from "../../../assets/Picture1.png"
+import Picture1 from "../../../../assets/Picture1.png"
 import { AddForm } from "./form"
 
 

@@ -1,10 +1,10 @@
 'use client'
 
-import Password from "../../../components/Password"
-import { Alert } from "../../../components/ui/alert.jsx"
-import { Button } from "../../../components/ui/button.jsx"
-import { Input } from "../../../components/ui/input.jsx"
-import { Label } from "../../../components/ui/label.jsx"
+import Password from "../../../../components/Validation/Password"
+import { Alert } from "../../../../components/ui/alert.jsx"
+import { Button } from "../../../../components/ui/button.jsx"
+import { Input } from "../../../../components/ui/input.jsx"
+import { Label } from "../../../../components/ui/label.jsx"
 import { signIn } from 'next-auth/react'
 import { useState } from "react"
 
