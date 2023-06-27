@@ -1,4 +1,4 @@
-import { CreditCard, LogOut, PlusCircle, Settings, User, Pin, ExternalLink, HelpCircle, DivideCircleIcon } from "lucide-react"
+import { Pin, ExternalLink, HelpCircle } from "lucide-react"
 
 import { Button } from "../../ui/button"
 import {

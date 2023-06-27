@@ -1,4 +1,4 @@
-import { CreditCard, LogOut, PlusCircle, Settings, User, Pin, ExternalLink, Wrench } from "lucide-react"
+import { Pin, ExternalLink, Wrench } from "lucide-react"
 
 import { Button } from "../../ui/button"
 import {

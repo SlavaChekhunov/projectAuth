@@ -8,19 +8,19 @@ export function MainNav({ className, ...props }) {
         {...props}
       >
         <Link
-          href="/examples/dashboard"
+          href="/dashboard"
           className="text-sm font-medium transition-colors hover:text-primary hover:underline"
         >
           Dashboard
         </Link>
         <Link
-          href="/examples/dashboard"
+          href="/campaigns"
           className="text-sm font-medium transition-colors hover:text-primary hover:underline"
         >
           Campaigns
         </Link>
         <Link
-          href="/examples/dashboard"
+          href="/templates"
           className="text-sm font-medium transition-colors hover:text-primary hover:underline"
         >
           Templates
