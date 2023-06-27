@@ -1,5 +1,5 @@
 import { hash } from "bcrypt";
-import { prisma } from "../../../lib/prisma";
+import { prisma } from "../../../../lib/prisma";
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
 import { nanoid } from "nanoid"

@@ -13,12 +13,11 @@ export default function HeaderPage() {
       <Image src={OIP} className="w-10 h-10" alt="some alt text" />
       <MainNav className="pl-3"/>
       </div>
-      <div className="flex flex-row items-center space-x-4">
+      <div className="flex flex-row items-center space-x-6">
       <HelpNav />
       <ToolsNav />
       <div className="w-0.5 h-8 bg-gray-200"></div>
       <UserNav />
-      <p>ACME Corp</p>
       </div>
       </div>
   )

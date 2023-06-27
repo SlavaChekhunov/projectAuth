@@ -22,7 +22,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../../../components/ui/dropdown-menu"
+} from "../../../../components/ui/dropdown-menu"
 
 import {
   Dialog,
@@ -32,7 +32,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../../../components/ui/dialog"
+} from "../../../../components/ui/dialog"
 
 import {
   ContextMenu,
@@ -48,14 +48,14 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
   ContextMenuTrigger,
-} from "../../../components/ui/context"
+} from "../../../../components/ui/context"
 
 
 
-import { Button } from "../../../components/ui/button.jsx"
-import { Checkbox } from "../../../components/ui/checkbox.jsx"
+import { Button } from "../../../../components/ui/button.jsx"
+import { Checkbox } from "../../../../components/ui/checkbox.jsx"
 import { useRouter } from "next/navigation"
-import { Input } from "../../../components/ui/input"
+import { Input } from "../../../../components/ui/input"
 import { useState } from "react";
 
 

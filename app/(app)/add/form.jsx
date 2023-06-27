@@ -194,7 +194,7 @@ export const AddForm = () => {
            {message && <Alert className="bg-red-200">{message}</Alert>}
     <CardFooter className="flex justify-between px-0 pt-2">
       <Button variant="outline"
-      onClick = {() => {router.push("/users")}}
+      onClick = {() => {router.push("/admin/users")}}
       >Cancel</Button>
       <Button>Add</Button>
     </CardFooter>

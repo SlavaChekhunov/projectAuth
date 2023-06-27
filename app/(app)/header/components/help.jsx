@@ -17,10 +17,10 @@ import { Toggle } from "../../../../components/ui/toggle"
 export function HelpNav() {
   return (
     <div className="flex flex-row items-center">
-    <HelpCircle className="mr-1 h-4 w-4"/>
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+        <Button variant="ghost" className="relative h-8 rounded-full flex items-center space-x-2">
+          <HelpCircle className="mr-2 h-4 w-4"/>
           Help
         </Button>
       </DropdownMenuTrigger>

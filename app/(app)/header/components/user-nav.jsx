@@ -27,11 +27,12 @@ export function UserNav() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+        <Button variant="ghost" className="relative h-8 rounded-full flex items-center space-x-2">
         <Avatar className="h-8 w-8">
             <AvatarImage src="/app/assets/OIP.jpg" alt="@shadcn" />
             <AvatarFallback>SC</AvatarFallback>
           </Avatar>
+          <p className="">ACME Corp</p>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>

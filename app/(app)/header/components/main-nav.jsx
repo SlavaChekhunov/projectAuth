@@ -26,7 +26,7 @@ export function MainNav({ className, ...props }) {
           Templates
         </Link>
         <Link
-          href="/examples/dashboard"
+          href="/admin/users"
           className="text-sm font-medium transition-colors hover:text-primary hover:underline"
         >
           Admin

@@ -20,9 +20,9 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from "../../../components/ui/table.jsx"
-import { Button } from "../../../components/ui/button.jsx"
-import { Input } from "../../../components/ui/input.jsx"
+} from "../../../../components/ui/table.jsx"
+import { Button } from "../../../../components/ui/button.jsx"
+import { Input } from "../../../../components/ui/input.jsx"
 
 import {
   DropdownMenu,
@@ -31,10 +31,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../../../components/ui/dropdown-menu"
-import { Alert } from "../../../components/ui/alert.jsx";
+} from "../../../../components/ui/dropdown-menu"
+import { Alert } from "../../../../components/ui/alert.jsx";
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
-import Loading from "../../loading";
+import Loading from "../../../loading";
 
 export function DataTable({ columns, data }) {
 
